@@ -14,7 +14,7 @@ services:
       - POSTGRESQL_PASSWORD=admin
       - POSTGRESQL_DATABASE=auth_db
       - POSTGRESQL_SYNCHRONOUS_COMMIT_MODE=on
-      - POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS=2
+      - POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS=1
 
   postgresql-slave_1:
     image: 'bitnami/postgresql:latest'
