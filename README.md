@@ -1,108 +1,60 @@
-# SD_T2
-SD_TrabalhoPratico2
 
-Neste trabalho pratico irei tentar aplicar algumas das tecnicas aprendidas na disciplina de Sistemas Distribuidos usando tecnologias diferentes.
+Distributed Systems Project
+Introduction
+In the pursuit of enhancing the previous project's implementation, which involved the development of a server, general client, and administrator components, this practical work aimed to apply techniques and concepts learned in class. Building upon the previous use of Java RMI and Spring Data for server development, this iteration delved into exploring alternative solutions to meet the professor's requirements.
 
-## SeekArtist 2.0 - Sistema de Gestão de Artistas de Rua
+Objectives
+The objectives remain similar to the previous project, with some nuanced changes in data modeling and service functionalities.
 
-Neste trabalho a ideia é implementar o que se encontra no PDF. Normalmente a ideia seria continuar com a implementação da primeira parte,
-mas neste trabalho pede que se possa usar tecnologias diferentes e na primeira parte implementei spring data com servidor RMI em java entao o cliente foi escrito tambem em java com a interface do RMI.
-
-Nesta segunda parte irei usar uma abordagem diferente.
-
-Neste trabalho não temos preocupação com aspecto visual, os parametros de configuração devem ser exteriores a propria app e a aplicação deve ser compativel com a plataforma alunos.di.uevora.pt, e a BD deve ser PostgresQL.
-
-### Modelo de dados
-
-1. [] User
-    - UserID (chave primária)
-    - Username
-    - Email
-    - Password
-    - Tipo (administrador|normal)
-
-2. [] Artista:
-    - ArtistID (chave primária)
-    - Nome
-    - Estado (não aprovado|aprovado)
-    - Lista de Localizações (contendo latitude e longitude)
-    - Rating (opcional)
-
-3. [] Donativo:
-    - DonativoID (chave primária)
-    - Data
-    - Valor
-    - ArtistaID (chave estrangeira referenciando Artista)
-    - UserID (chave estrangeira referenciando User)
-
-### Operações para Cliente Geral
-
-1. [] Registar-se no Sistema:
-    - Inserir um novo usuário com username, email e password.
-    - Verificar duplicatas (username ou email).
-
-2. [] Autenticar-se:
-    - Verificar username e password para autenticação.
-
-3. [] Pedido de Registo de Novo Artista:
-    - Inserir novo artista com estado não aprovado.
-    - Adicionar localização (se necessário).
-
-4. [] Listar Artistas:
-    - Listar artistas com opção de filtros (localização e arte).
-
-5. [] Listar Localizações de Artistas:
-    - Listar localizações onde existem artistas a atuar.
-
-6. [] Listar Atuações Anteriores de um Artista:
-    - Para um artista identificado por ArtistID, listar datas e localizações.
-
-7. [] Listar Próxima Atuação de um Artista:
-    - Para um artista identificado por ArtistID, listar próxima atuação.
-
-8. [] Enviar Donativo a um Artista:
-    - Inserir um novo donativo indicando valor, artista e utilizador.
-
-9. [] Listar Donativos Recebidos por um Artista:
-    - Para um artista identificado por ArtistID, listar donativos recebidos.
-
-10. [] (Bónus) Dar Classificação a um Artista:
-    - Atribuir uma classificação (rating) a um artista.
-
-11. [] (Bónus) Ver Rating de Cada Artista:
-    - Incluir rating na listagem de artistas.
+Data Modeling Objectives:
+- Provide GPS coordinates as location.
+- Maintain a list of all locations for an artist, representing past and future performances.
+- Enable the option to send donations to artists.
+- Implement user authentication for applications.
 
 
-### Operações para Cliente Administrador
 
-1. [] Autenticar-se como Administrador:
-    - Verificar username, password e tipo de administrador.
-
-2. [] Dar Permissão de Administrador a um User:
-    - Atualizar o tipo de um usuário para administrador.
-
-3. [] Listar Artistas por Estado:
-    - Listar artistas com base no estado (aprovado ou não).
-
-4. [] Aprovar um Artista:
-    - Atualizar o estado do artista para aprovado.
-
-5. [] Consultar e Alterar Informações de um Artista:
-    - Consultar informações de um artista.
-    - Permitir alterações relevantes.
-
-6. [] Todas as Operações Permitidas pelo Cliente Geral.
+General Client Objectives:
+- Register in the system with a username/email/password.
+- Authenticate with a username and password.
+- Request registration of a new artist.
+- List artists with location or art filters.
+- List locations where artists are performing.
+- Display dates of past and future performances for an artist.
+- Send donations to an artist.
+- List donations to an artist.
+- Rate an artist.
+- View a list of artists and their ratings.
 
 
-### Operações para o Servidor (Bónus):
+  
+Administrator Objectives:
+- Authenticate as an administrator.
+- Grant administrator permissions to a user.
+- List artists by status (approval).
+- Approve an artist who has not yet been approved.
+- Consult and modify artist information.
+- Perform all actions available to a general client.
 
-1. [] Suporte para Redundância/Replicação:
-    - Configurar replicação assíncrona para tolerar falhas.
 
-2. [] Mecanismo Publish/Subscribe:
-    - Implementar um mecanismo de publish/subscribe para notificar sobre novos artistas ou atuações em tempo real.
 
-## Inicio
+Server Objectives:
+- Support redundancy and replication to tolerate failures.
+- Implement a publish-subscribe mechanism.
+- The implementation should allow for flexibility in technologies and languages, ensuring the system can continue functioning when switching these components.
 
-Irei enfrentar este projecto por fases, sendo ele feito de micro serviços. Irei ter 1 servido de auth com duas base de dados 1 Master e 1 Slave que sera usado para Autenticação.
+Development
+To achieve the goals of this project, various new techniques and concepts were employed. The server was designed as a REST API, and the client as a consumer of the REST API, with JWT tokens used for authentication. Microservices were utilized for a horizontally scalable solution. The project was developed with the separation of each microservice's responsibilities in mind. Although I changed several stuff (and not for the best in most cases). I only had 5 days to learn and deploy all this concepts in my spare time.
+
+Technologies Used:
+Spring Eureka (Netflix) for service discovery.
+Spring Gateway for service filtering and load balancing.
+Docker for database containerization.
+Zipkin for distributed tracing with micrometer instead of sleught.
+Zookeeper and Apache Kafka for pub/sub service.
+The implementation also incorporated a JWT-based authentication service, a database per microservice using Docker, and replication through synchronous and asynchronous methods.
+Config server that I deleted cause my computer could not handle all the services up and running at some point. :'D
+
+Conclusion
+Despite the challenges posed by time constraints and concurrent academic and professional commitments (I work as a machinist while trying to learn computer science to change field), this project provided valuable insights into various cloud solutions and the Spring framework. While the desired outcome may not have been fully achieved, the effort invested in meeting deadlines was worthwhile. The exploration of different cloud solutions and technologies significantly contributed to a deeper understanding of distributed systems and cloud architectures. Having made some mistakes, one can gain a broader perspective on all the options and understand why certain solutions are chosen and the possibilities they bring. If I were to start over (something I intend to do to try a different approach), I would change some of the decisions I made.
 
