@@ -53,12 +53,14 @@ The objectives remain similar to the previous project, with some nuanced changes
 
 To achieve the goals of this project, various new techniques and concepts were employed. The server was designed as a REST API, and the client as a consumer of the REST API, with JWT tokens used for authentication. Microservices were utilized for a horizontally scalable solution. The project was developed with the separation of each microservice's responsibilities in mind. Although I changed several stuff (and not for the best in most cases). I only had 5 days to learn and deploy all this concepts in my spare time.
 
-Some Of The Technologies Used:
-Spring Eureka (Netflix) for service discovery.
-Spring Gateway for service filtering and load balancing.
-Docker for database containerization.
-Zipkin for distributed tracing with micrometer instead of sleught.
-Zookeeper and Apache Kafka for pub/sub service.
+
+#### Some Of The Technologies Used:
+- Spring Eureka (Netflix) for service discovery.
+- Spring Gateway for service filtering and load balancing.
+- Docker for database containerization.
+- Zipkin for distributed tracing with micrometer instead of sleught.
+- Zookeeper and Apache Kafka for pub/sub service.
+
 The implementation also incorporated a JWT-based authentication service, a database per microservice using Docker, and replication through synchronous and asynchronous methods.
 Config server that I deleted cause my computer could not handle all the services up and running at some point. :'D
 
